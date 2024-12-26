@@ -8,9 +8,9 @@ export function templates(type: string) {
     if (type == 'two') {
         return [
             {
-               name: '',
-               description: '',
-               icon: '',
+               name: 'Empty',
+               description: 'A empty template',
+               icon: '/templates/two/empty.png',
                path: ''
            },
            {
