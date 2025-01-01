@@ -1,12 +1,22 @@
 import { getCurrentWindow } from "@tauri-apps/api/window"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { getEditorOpenStatus } from "./system/functions/statuses";
+import { useState } from "react";
+import Exit from "../popup/Exit";
 
 export default function Titlebar() {
   const appWindow = getCurrentWindow();
+  const [isExitVisible, setExitVisible] = useState(false); 
 
   function minimize() { appWindow.minimize() }
-  function close() { appWindow.close() } 
+  function close() {
+    if(getEditorOpenStatus()) {
+      setExitVisible(true);
+    } else {
+      appWindow.close();
+    }
+  } 
   function drag() { appWindow.startDragging() }
 
   return (
@@ -31,6 +41,7 @@ export default function Titlebar() {
                 </div>
             </div>
         </div>
+        {isExitVisible && <Exit onClose={() => setExitVisible(false)} />} {}
     </>
   )
 }

@@ -5,10 +5,17 @@ import Open from "./pages/project/Open";
 
 import "./input.css";
 import "./App.css";
+
 import Titlebar from "./components/titlebar";
 import Create from "./pages/project/Create";
+import { useEffect } from "react";
+import { updateGetEditorStatus } from "./components/system/functions/statuses";
+import Editor from "./pages/editor/Editor";
 
 export default function App() {
+  useEffect(() => {
+    updateGetEditorStatus(false);
+  }, []);
   return (
     <>
       <Titlebar />
@@ -17,6 +24,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="create" element={<Create />} />
           <Route path="open" element={<Open/>}/>
+          <Route path="editor" element={<Editor/>}/>
         </Routes>
       </BrowserRouter>
     </>

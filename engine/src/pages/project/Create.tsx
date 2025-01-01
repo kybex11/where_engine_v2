@@ -2,19 +2,30 @@ import { useState } from "react";
 import { ProjectStruct, templates } from "../../packages/engine.project/index";
 import Button from "../../UIKit/Button";
 import Input from "../../UIKit/Input";
+import { OpenProject } from "../../tools/project";
+import { invoke } from "@tauri-apps/api/core";
 
 export default function Create() {
   const [projectType, setProjectType] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectTemplate, setProjectTemplate] = useState("");
+  const [projectPath, setProjectPath] = useState("");
 
   let project: ProjectStruct = {
     _project_name: projectName,
     _project_type: projectType,
     _template: projectTemplate,
+    _path: projectPath
   };
 
-  const create = () => {};
+  const create = () => {
+    invoke('create_project', { project })
+      .then((msg) => {
+        OpenProject(project._path);
+      })
+      .catch((error) => console.error(error));
+    
+  };
 
   return (
     <>
@@ -44,7 +55,7 @@ export default function Create() {
               </select>
             </div>
             <div className="flex items-center gap-2 p-4">
-                
+                <h1>templates in development</h1>
             </div>
           </div>
           <Button text="Create" func={create} />

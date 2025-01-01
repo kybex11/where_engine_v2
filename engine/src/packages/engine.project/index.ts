@@ -1,7 +1,8 @@
 export interface ProjectStruct {
     _project_name: string,
     _project_type: string,
-    _template: string 
+    _template: string,
+    _path: string
 };
 
 export function templates(type: string) {
