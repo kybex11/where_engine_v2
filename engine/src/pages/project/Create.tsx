@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProjectStruct, templates } from "../../packages/engine.project/index";
 import Button from "../../UIKit/Button";
 import Input from "../../UIKit/Input";
 import { OpenProject } from "../../tools/project";
 import { invoke } from "@tauri-apps/api/core";
+import Cookies from 'js-cookie';
 
 export default function Create() {
   const [projectType, setProjectType] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectTemplate, setProjectTemplate] = useState("");
   const [projectPath, setProjectPath] = useState("");
+
+  useEffect(() => {
+    Cookies.set('project.name', '');
+    Cookies.set('project.type', '');
+    Cookies.set('project.template', '');
+    Cookies.set('project.path', '');
+  }, []);
 
   let project: ProjectStruct = {
     _project_name: projectName,
@@ -19,12 +27,19 @@ export default function Create() {
   };
 
   const create = () => {
-    invoke('create_project', { project })
+    if (project._path.length < 1) {
+      Cookies.set('project.name', project._project_name);
+      Cookies.set('project.type', project._project_type);
+      Cookies.set('project.template', project._template);
+      window.location.href = "/create/open";
+      
+    } else {
+      invoke('create_project', { project })
       .then((msg) => {
-        OpenProject(project._path);
+        OpenProject(project);
       })
       .catch((error) => console.error(error));
-    
+    }
   };
 
   return (

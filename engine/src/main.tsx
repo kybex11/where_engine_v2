@@ -10,7 +10,11 @@ import Titlebar from "./components/titlebar";
 import Create from "./pages/project/Create";
 import { useEffect } from "react";
 import { updateGetEditorStatus } from "./components/system/functions/statuses";
-import Editor from "./pages/editor/Editor";
+import CreateOpen from "./pages/project/create/open";
+
+import TilemapEditor from "./pages/editor/tilemap/Tilemap";
+import TwoEditor from "./pages/editor/two/Two";
+import ThreeEditor from "./pages/editor/three/Three";
 
 export default function App() {
   useEffect(() => {
@@ -24,7 +28,11 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="create" element={<Create />} />
           <Route path="open" element={<Open/>}/>
-          <Route path="editor" element={<Editor/>}/>
+          <Route path="create/open" element={<CreateOpen/>}/>
+
+          <Route path="editor/tilemap" element={<TilemapEditor/>}/>
+          <Route path="editor/two" element={<TwoEditor/>}/>
+          <Route path="editor/three" element={<ThreeEditor/>}/>
         </Routes>
       </BrowserRouter>
     </>
