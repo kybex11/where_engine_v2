@@ -9,21 +9,34 @@ import Cookies from 'js-cookie';
 export default function Open() {
     const [path, setPath] = useState('');
     const project: ProjectStruct = {
-        _project_name: Cookies.get('project.name') || '',
-        _project_type: Cookies.get('project.type') || '',
-        _template: Cookies.get('project.template') || '',
-        _path: path
+        projectName: Cookies.get('project.name') || '',
+        projectType: Cookies.get('project.type') || '',
+        template: Cookies.get('project.template') || '',
+        path: path
     }
 
     const [filesAndDirs, setFilesAndDirs] = useState<string[]>([]);
 
     const create = () => {
-        invoke('create_project', { project })
-          .then((msg) => {
+        console.log("Creating project with path:", path);
+        if (!path || path.trim() === '') {
+            console.error("Path is empty or invalid.");
+            return;
+        }
+
+        console.log("Final path for project creation:", path);
+
+        invoke('create_project', { 
+            projectName: Cookies.get('project.name') || '',
+            projectType: Cookies.get('project.type') || '',
+            template: Cookies.get('project.template') || '',
+            path: path 
+        })
+        .then((msg) => {
             OpenProject(project);
-          })
-          .catch((error) => console.error(error));
-    }
+        })
+        .catch((error) => console.error("Error creating project:", error, project));
+    };
 
     const handlePathChange = (newPath: string) => {
         setPath(newPath);

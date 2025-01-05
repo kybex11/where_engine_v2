@@ -1,7 +1,13 @@
 import { ProjectStruct } from "../packages/engine.project";
+import Cookies from "js-cookie";
 
 export function OpenProject(project: ProjectStruct) {
-    switch(project._project_type) {
+    Cookies.set('project.name', project.projectName);
+    Cookies.set('project.type', project.projectType);
+    Cookies.set('project.template', project.template);
+    Cookies.set('project.path', project.path);
+    
+    switch(project.projectType) {
         case 'two':
             window.location.href = "editor/two";
             break;

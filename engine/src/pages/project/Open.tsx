@@ -9,10 +9,10 @@ import Cookies from 'js-cookie';
 export default function Open() {
     const [path, setPath] = useState('');
     const project: ProjectStruct = {
-        _project_name: Cookies.get('project.name') || '',
-        _project_type: Cookies.get('project.type') || '',
-        _template: Cookies.get('project.template') || '',
-        _path: path
+        projectName: Cookies.get('project.name') || '',
+        projectType: Cookies.get('project.type') || '',
+        template: Cookies.get('project.template') || '',
+        path: path
     }
     const [filesAndDirs, setFilesAndDirs] = useState<string[]>([]);
 

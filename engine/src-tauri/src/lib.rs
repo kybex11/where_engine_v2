@@ -31,16 +31,38 @@ fn add_to_recently(name: String, path: String) -> Result<(), String> {
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
-fn create_project(_project_name: String, _project_type: String, _template: String, _path: String) -> Result<(), String> {
-    add_to_recently(_project_name.clone(), _path.clone())?;
+fn create_project(projectName: String, projectType: String, template: String, path: String) -> Result<(), String> {
+    println!("Creating project at path: {}", path);
 
-    std::fs::create_dir_all(format!("{}/src", _path)).map_err(|e| e.to_string())?;
-    std::fs::create_dir_all(format!("{}/scenes", _path)).map_err(|e| e.to_string())?;
-    std::fs::create_dir_all(format!("{}/assets", _path)).map_err(|e| e.to_string())?;
-    
-    let project_file_path = format!("{}/project.project", _path);
+    let path = std::path::Path::new(&path);
+    if !path.exists() {
+        return Err(format!("Path does not exist: {}", path.display()));
+    }
+
+    add_to_recently(projectName.clone(), path.to_str().unwrap().to_string())?;
+
+    // Логируем создание директорий
+    std::fs::create_dir_all(path.join("src")).map_err(|e| {
+        println!("Error creating src directory: {}", e);
+        e.to_string()
+    })?;
+    std::fs::create_dir_all(path.join("scenes")).map_err(|e| {
+        println!("Error creating scenes directory: {}", e);
+        e.to_string()
+    })?;
+    std::fs::create_dir_all(path.join("assets")).map_err(|e| {
+        println!("Error creating assets directory: {}", e);
+        e.to_string()
+    })?;
+
+    let project_file_path = path.join("project.project");
     let mut project_file = File::create(&project_file_path).map_err(|e| e.to_string())?;
-    project_file.write_all(b"test").map_err(|e| e.to_string())?;
+
+    let project_content = format!(
+        "name={}\ntype={}\ntemplate={}\npath={}\nversion=\"\"\ntarget=\"\"\nbuild_target=\"\"\nauthor=\"\"",
+        projectName, projectType, template, path.display()
+    );
+    project_file.write_all(project_content.as_bytes()).map_err(|e| e.to_string())?;
 
     Ok(())
 }

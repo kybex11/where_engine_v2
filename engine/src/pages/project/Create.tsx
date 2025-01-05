@@ -6,11 +6,21 @@ import { OpenProject } from "../../tools/project";
 import { invoke } from "@tauri-apps/api/core";
 import Cookies from 'js-cookie';
 
+// Define the template structure
+interface Template {
+  name: string;
+  description: string;
+  icon: string;
+  path: string;
+}
+
 export default function Create() {
   const [projectType, setProjectType] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectTemplate, setProjectTemplate] = useState("");
   const [projectPath, setProjectPath] = useState("");
+
+  const [availableTemplates, setAvailableTemplates] = useState<Template[]>([]);
 
   useEffect(() => {
     Cookies.set('project.name', '');
@@ -19,18 +29,26 @@ export default function Create() {
     Cookies.set('project.path', '');
   }, []);
 
+  useEffect(() => {
+    if (projectType) {
+      const fetchedTemplates = templates(projectType);
+      console.log(fetchedTemplates);
+      setAvailableTemplates(fetchedTemplates);
+    }
+  }, [projectType]);
+
   let project: ProjectStruct = {
-    _project_name: projectName,
-    _project_type: projectType,
-    _template: projectTemplate,
-    _path: projectPath
+    projectName: projectName,
+    projectType: projectType,
+    template: projectTemplate,
+    path: projectPath
   };
 
   const create = () => {
-    if (project._path.length < 1) {
-      Cookies.set('project.name', project._project_name);
-      Cookies.set('project.type', project._project_type);
-      Cookies.set('project.template', project._template);
+    if (project.path.length < 1) {
+      Cookies.set('project.name', project.projectName);
+      Cookies.set('project.type', project.projectType);
+      Cookies.set('project.template', project.template);
       window.location.href = "/create/open";
       
     } else {
@@ -53,7 +71,7 @@ export default function Create() {
             <div className="flex items-center gap-2">
               <Input
                 placeholder="Project Name"
-                value=""
+                value={projectName}
                 onchange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setProjectName(e.target.value)
                 }
@@ -63,14 +81,24 @@ export default function Create() {
                 onChange={(e) => setProjectType(e.target.value)}
                 className="border border-gray-300 rounded-md font-bold p-2 shadow-md h-10"
               >
-                <option value="">Select Type</option>
-                <option value="2D">2D</option>
-                <option value="3D">3D</option>
-                <option value="Tilemap">Tilemap</option>
+                <option value="two">2D</option>
+                <option value="three">3D</option>
+                <option value="tilemap">Tilemap</option>
               </select>
             </div>
-            <div className="flex items-center gap-2 p-4">
-                <h1>templates in development</h1>
+            <div className="flex flex-wrap gap-4 p-4">
+              {availableTemplates.map((template, index) => (
+                <div key={index} className="flex flex-col items-center">
+                  <button 
+                    onClick={() => { setProjectTemplate(template.name)}} 
+                    className="flex flex-col items-center"
+                  >
+                  
+                  <img src={template.icon} alt={template.name} className="w-16 h-16" />
+                  <p>{template.description}</p>
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
           <Button text="Create" func={create} />
