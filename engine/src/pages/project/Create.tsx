@@ -66,7 +66,7 @@ export default function Create() {
       <div className="justify-center items-center flex h-screen">
         <div className="w-auto">
           <h1 className="text-white text-4xl p-10 text-center font-bold">
-            Create Project
+            {t('create_project')}
           </h1>
           <div className="bg-white w-96 h-96 rounded-xl shadow-lg p-4">
             <div className="flex items-center gap-2">

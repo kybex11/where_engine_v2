@@ -28,7 +28,8 @@ i18next
          'recently_projects': "Recently Projects",
          "create": "Create",
          "open": "Open",
-         "back": "Back"
+         "back": "Back",
+         "create_project": "Create Project"
         }
       },
       ru: {
@@ -36,7 +37,8 @@ i18next
          'recently_projects': "Последние Проекты",
          "create": "Создать",
          "open": "Открыть",
-         "back": "Назад"
+         "back": "Назад",
+         "create_project": "Создать проект"
         }
       }
     },
