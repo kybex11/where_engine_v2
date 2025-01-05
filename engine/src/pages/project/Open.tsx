@@ -5,6 +5,7 @@ import { invoke } from "@tauri-apps/api/core";
 import Input from "../../UIKit/Input";
 import { ProjectStruct } from "../../packages/engine.project";
 import Cookies from 'js-cookie';
+import { t } from "i18next";
 
 export default function Open() {
     const [path, setPath] = useState('');
@@ -42,8 +43,8 @@ export default function Open() {
                             ))}
                         </div>
                     </div>
-                    <Button text="Open" func={() => OpenProject(project)}/>
-                    <Button text="Back" func={() => window.location.href = "/"}/>
+                    <Button text={t('open')} func={() => OpenProject(project)}/>
+                    <Button text={t('back')} func={() => window.location.href = "/"}/>
                 </div>
             </div>
         </>

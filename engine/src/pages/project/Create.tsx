@@ -5,6 +5,7 @@ import Input from "../../UIKit/Input";
 import { OpenProject } from "../../tools/project";
 import { invoke } from "@tauri-apps/api/core";
 import Cookies from 'js-cookie';
+import { t } from "i18next";
 
 // Define the template structure
 interface Template {
@@ -101,9 +102,9 @@ export default function Create() {
               ))}
             </div>
           </div>
-          <Button text="Create" func={create} />
+          <Button text={t('create')} func={create} />
           <Button
-            text="Back"
+            text={t('back')}
             func={() => {
               window.location.href = "/";
             }}

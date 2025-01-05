@@ -1,6 +1,6 @@
 import Recently from "../components/recently";
 import Button from "../UIKit/Button";
-
+import { t } from "i18next";
 export default function Home() {
   function create() {
     window.location.href = "/create";
@@ -13,7 +13,7 @@ export default function Home() {
     <div className="h-screen flex items-center justify-between">
       <div className="flex flex-col items-center mx-auto">
         <h2 className="text-white font-bold text-2xl mb-4 w-full text-left">
-          Recently Projects
+          {t('recently_projects')}
         </h2>
         <div className="bg-white w-96 h-96 rounded-xl shadow-lg">
           <Recently />
@@ -21,8 +21,8 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col items-end justify-center pr-10">
-        <Button text="Create" func={create} />
-        <Button text="Open" func={open} />
+        <Button text={t('create')} func={create} />
+        <Button text={t('open')} func={open} />
       </div>
     </div>
   );
