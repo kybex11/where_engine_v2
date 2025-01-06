@@ -7,7 +7,6 @@ import { invoke } from "@tauri-apps/api/core";
 import Cookies from 'js-cookie';
 import { t } from "i18next";
 
-// Define the template structure
 interface Template {
   name: string;
   description: string;

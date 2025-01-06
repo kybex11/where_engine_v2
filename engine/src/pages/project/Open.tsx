@@ -32,7 +32,7 @@ export default function Open() {
         <>
             <div className="justify-center items-center flex h-screen">
                 <div className="w-auto">
-                    <h1 className="text-white text-4xl p-10 text-center font-bold">Open Project</h1>
+                    <h1 className="text-white text-4xl p-10 text-center font-bold">{t('open_project')}</h1>
                     <div className="bg-white w-96 h-96 rounded-xl shadow-lg p-4">
                         <div className="items-center gap-2 justify-center p-4">
                             <Input placeholder="Project Path" value={path} onchange={(e) => handlePathChange(e.target.value)} />

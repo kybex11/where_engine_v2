@@ -29,7 +29,9 @@ i18next
          "create": "Create",
          "open": "Open",
          "back": "Back",
-         "create_project": "Create Project"
+         "create_project": "Create Project",
+         "open_project": "Open Project",
+         "set_project_path": "Set Project Path"
         }
       },
       ru: {
@@ -38,7 +40,9 @@ i18next
          "create": "Создать",
          "open": "Открыть",
          "back": "Назад",
-         "create_project": "Создать проект"
+         "create_project": "Создать Проект",
+         "open_project": "Открыть Проект",
+         "set_project_path": "Путь Проекта"
         }
       }
     },

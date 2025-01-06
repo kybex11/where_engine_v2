@@ -1,7 +1,14 @@
 import Recently from "../components/recently";
 import Button from "../UIKit/Button";
 import { t } from "i18next";
+import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import i18next from "i18next";
+
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   function create() {
     window.location.href = "/create";
   }
@@ -9,9 +16,27 @@ export default function Home() {
     window.location.href = "/open";
   }
 
+  function changeLanguage(lang: string) {
+    i18next.changeLanguage(lang);
+    setMenuOpen(false);
+  }
+
   return (
     <div className="h-screen flex items-center justify-between">
       <div className="flex flex-col items-center mx-auto">
+        <div className="absolute top-10 left-4">
+          <FontAwesomeIcon 
+            icon={faCog} 
+            onClick={() => setMenuOpen(!menuOpen)} 
+            className="text-white cursor-pointer" 
+          />
+          {menuOpen && (
+            <div className="absolute bg-white shadow-lg rounded p-2">
+              <button onClick={() => changeLanguage('en')}>English</button>
+              <button onClick={() => changeLanguage('ru')}>Русский</button>
+            </div>
+          )}
+        </div>
         <h2 className="text-white font-bold text-2xl mb-4 w-full text-left">
           {t('recently_projects')}
         </h2>

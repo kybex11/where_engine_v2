@@ -35,34 +35,47 @@ fn create_project(projectName: String, projectType: String, template: String, pa
     println!("Creating project at path: {}", path);
 
     let path = std::path::Path::new(&path);
-    if !path.exists() {
+    
+    // Check if the path exists
+    if path.exists() {
+        println!("Path exists: {}", path.display());
+    } else {
+        println!("Path does not exist: {}", path.display());
         return Err(format!("Path does not exist: {}", path.display()));
     }
 
     add_to_recently(projectName.clone(), path.to_str().unwrap().to_string())?;
 
-    // Логируем создание директорий
-    std::fs::create_dir_all(path.join("src")).map_err(|e| {
+    // Log directory creation
+    if let Err(e) = std::fs::create_dir_all(path.join("src")) {
         println!("Error creating src directory: {}", e);
-        e.to_string()
-    })?;
-    std::fs::create_dir_all(path.join("scenes")).map_err(|e| {
+        return Err(e.to_string());
+    }
+    if let Err(e) = std::fs::create_dir_all(path.join("scenes")) {
         println!("Error creating scenes directory: {}", e);
-        e.to_string()
-    })?;
-    std::fs::create_dir_all(path.join("assets")).map_err(|e| {
+        return Err(e.to_string());
+    }
+    if let Err(e) = std::fs::create_dir_all(path.join("assets")) {
         println!("Error creating assets directory: {}", e);
-        e.to_string()
-    })?;
+        return Err(e.to_string());
+    }
 
     let project_file_path = path.join("project.project");
-    let mut project_file = File::create(&project_file_path).map_err(|e| e.to_string())?;
+    println!("Creating project file: {}", project_file_path.display()); // Logging before file creation
+    let mut project_file = File::create(&project_file_path).map_err(|e| {
+        println!("Error creating project file: {}", e);
+        e.to_string()
+    })?;
+    println!("Project file successfully created: {}", project_file_path.display()); // Logging after file creation
 
     let project_content = format!(
         "name={}\ntype={}\ntemplate={}\npath={}\nversion=\"\"\ntarget=\"\"\nbuild_target=\"\"\nauthor=\"\"",
         projectName, projectType, template, path.display()
     );
-    project_file.write_all(project_content.as_bytes()).map_err(|e| e.to_string())?;
+    project_file.write_all(project_content.as_bytes()).map_err(|e| {
+        println!("Error writing to project file: {}", e);
+        e.to_string()
+    })?;
 
     Ok(())
 }
