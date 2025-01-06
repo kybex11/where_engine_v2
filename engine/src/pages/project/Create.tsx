@@ -5,7 +5,7 @@ import Input from "../../UIKit/Input";
 import { OpenProject } from "../../tools/project";
 import { invoke } from "@tauri-apps/api/core";
 import Cookies from 'js-cookie';
-import { t } from "i18next";
+import { useTranslation } from 'react-i18next';
 
 interface Template {
   name: string;
@@ -15,6 +15,7 @@ interface Template {
 }
 
 export default function Create() {
+  const { t } = useTranslation();
   const [projectType, setProjectType] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectTemplate, setProjectTemplate] = useState("");
@@ -93,9 +94,8 @@ export default function Create() {
                     onClick={() => { setProjectTemplate(template.name)}} 
                     className="flex flex-col items-center"
                   >
-                  
-                  <img src={template.icon} alt={template.name} className="w-16 h-16" />
-                  <p>{template.description}</p>
+                    <img src={template.icon} alt={template.name} className="w-16 h-16" />
+                    <p>{template.description}</p>
                   </button>
                 </div>
               ))}

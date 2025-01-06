@@ -46,7 +46,7 @@ i18next
         }
       }
     },
-    lng: "ru", 
+    lng: "en", 
     fallbackLng: "en",
     interpolation: {
       escapeValue: false

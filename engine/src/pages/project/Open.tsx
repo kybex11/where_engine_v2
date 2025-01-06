@@ -5,9 +5,10 @@ import { invoke } from "@tauri-apps/api/core";
 import Input from "../../UIKit/Input";
 import { ProjectStruct } from "../../packages/engine.project";
 import Cookies from 'js-cookie';
-import { t } from "i18next";
+import { useTranslation } from 'react-i18next';
 
 export default function Open() {
+    const { t } = useTranslation();
     const [path, setPath] = useState('');
     const project: ProjectStruct = {
         projectName: Cookies.get('project.name') || '',

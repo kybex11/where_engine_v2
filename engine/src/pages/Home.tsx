@@ -1,12 +1,13 @@
 import Recently from "../components/recently";
 import Button from "../UIKit/Button";
-import { t } from "i18next";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import i18next from "i18next";
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   function create() {
