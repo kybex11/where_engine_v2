@@ -19,6 +19,9 @@ import TilemapEditor from "./pages/editor/tilemap/Tilemap";
 import TwoEditor from "./pages/editor/two/Two";
 import ThreeEditor from "./pages/editor/three/Three";
 
+import { useTranslation } from "react-i18next";
+import Cookies from "js-cookie";
+
 i18next
   .use(initReactI18next)
   .init({
@@ -54,7 +57,10 @@ i18next
   });
 
 export default function App() {
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
+    i18n.changeLanguage(Cookies.get('language'))
     updateGetEditorStatus(false);
   }, []);
   return (

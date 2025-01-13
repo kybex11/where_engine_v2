@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import i18next from "i18next";
 import { useTranslation } from 'react-i18next';
+import Cookies from "js-cookie";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ export default function Home() {
   }
 
   function changeLanguage(lang: string) {
+    Cookies.set('language', lang);
     i18next.changeLanguage(lang);
     setMenuOpen(false);
   }
