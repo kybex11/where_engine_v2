@@ -6,6 +6,7 @@ export function OpenProject(project: ProjectStruct) {
     Cookies.set('project.type', project.projectType);
     Cookies.set('project.template', project.template);
     Cookies.set('project.path', project.path);
+    Cookies.set('project.compiled', 'false');
     
     switch(project.projectType) {
         case 'two':

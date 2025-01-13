@@ -4,7 +4,7 @@ import { updateGetEditorStatus } from "../../../components/system/functions/stat
 export default function TwoEditor() {
     useEffect(() => {
         updateGetEditorStatus(true);
-    }, []);
+    }, []);   
     return (
         <>
         </>
