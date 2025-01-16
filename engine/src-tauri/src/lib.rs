@@ -22,12 +22,7 @@ fn add_to_recently(name: String, path: String) -> Result<(), String> {
     Ok(())
 }
 
-//project structure
-// /
-//project.project
-//src/
-//scenes/
-//assets/
+
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
